@@ -22,3 +22,16 @@ def retrieve_original_url(request, code):
     except ShortURL.DoesNotExist:
         return Response({"error": "Short URL not found"}, status=404)
 
+@api_view(['PUT'])
+def update_short_url(request, code):
+    try:
+        url = ShortURL.objects.get(short_code=code)
+    except ShortURL.DoesNotExist:
+        return Response({"error": "Short URL not found"}, status=404)
+
+    serializer = ShortURLSerializer(url, data=request.data, partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=400)
+
