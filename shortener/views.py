@@ -1,8 +1,8 @@
 from rest_framework.decorators import api_view
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404, render
 from rest_framework.response import Response
 from rest_framework import status
-from .models import ShortURL
+from .models import ShortURL, generate_code 
 from .serializers import ShortURLSerializer
 
 @api_view(['POST'])
@@ -61,4 +61,20 @@ def redirect_to_original_url(request, code):
     url.save()
     return redirect(url.original_url)
 
+
+def html_shortener_view(request):
+    short_url = None
+
+    if request.method == 'POST':
+        original_url = request.POST.get('original_url')
+        code = generate_code()
+
+        # Avoid duplicate short codes
+        while ShortURL.objects.filter(short_code=code).exists():
+            code = generate_code()
+
+        obj = ShortURL.objects.create(original_url=original_url, short_code=code)
+        short_url = f"http://127.0.0.1:8000/s/{obj.short_code}"
+
+    return render(request, 'index.html', {'short_url': short_url})
 
