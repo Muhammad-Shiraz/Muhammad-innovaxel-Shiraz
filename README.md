@@ -1,6 +1,6 @@
 # 🔗 URL Shortener API – Django + MySQL
 
-This is a take-home assignment for Innovaxel's ASE – Python Specialist position. It is a fully functional RESTful API to shorten long URLs, store them in a MySQL database, and provide redirect and analytics support.
+This is a take-home assignment for Innovaxel's. It is a fully functional RESTful API to shorten long URLs, store them in a MySQL database, and provide redirect and analytics support.
 
 ---
 
