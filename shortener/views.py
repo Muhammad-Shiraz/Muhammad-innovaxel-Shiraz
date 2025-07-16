@@ -62,5 +62,3 @@ def redirect_to_original_url(request, code):
     return redirect(url.original_url)
 
 
-
-
