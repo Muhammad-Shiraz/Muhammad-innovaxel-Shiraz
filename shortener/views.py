@@ -1,4 +1,5 @@
 from rest_framework.decorators import api_view
+from django.shortcuts import redirect, get_object_or_404
 from rest_framework.response import Response
 from rest_framework import status
 from .models import ShortURL
@@ -51,4 +52,15 @@ def get_stats(request, code):
         return Response(ShortURLSerializer(url).data)
     except ShortURL.DoesNotExist:
         return Response({"error": "Short URL not found"}, status=404)
+
+
+
+def redirect_to_original_url(request, code):
+    url = get_object_or_404(ShortURL, short_code=code)
+    url.access_count += 1
+    url.save()
+    return redirect(url.original_url)
+
+
+
 
