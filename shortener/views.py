@@ -35,3 +35,11 @@ def update_short_url(request, code):
         return Response(serializer.data)
     return Response(serializer.errors, status=400)
 
+@api_view(['DELETE'])
+def delete_short_url(request, code):
+    try:
+        url = ShortURL.objects.get(short_code=code)
+        url.delete()
+        return Response(status=204)
+    except ShortURL.DoesNotExist:
+        return Response({"error": "Short URL not found"}, status=404)
