@@ -97,7 +97,7 @@ JSON payload example for creating a short URL:
   "original_url": "https://youtube.com"
 }
 ```
-Author
+Author: 
 Muhammad Shiraz
 Email: shirazshahzad876@gmail.com
 GitHub: @Muhammad-Shiraz
