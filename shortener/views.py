@@ -43,3 +43,12 @@ def delete_short_url(request, code):
         return Response(status=204)
     except ShortURL.DoesNotExist:
         return Response({"error": "Short URL not found"}, status=404)
+
+@api_view(['GET'])
+def get_stats(request, code):
+    try:
+        url = ShortURL.objects.get(short_code=code)
+        return Response(ShortURLSerializer(url).data)
+    except ShortURL.DoesNotExist:
+        return Response({"error": "Short URL not found"}, status=404)
+
